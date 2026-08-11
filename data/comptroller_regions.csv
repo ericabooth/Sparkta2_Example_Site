@@ -1,0 +1,255 @@
+geoid,county,region
+48001,Anderson,Upper East
+48003,Andrews,West Texas
+48005,Angelina,Southeast
+48007,Aransas,South Texas
+48009,Archer,Northwest
+48011,Armstrong,High Plains
+48013,Atascosa,Alamo
+48015,Austin,Gulf Coast
+48017,Bailey,High Plains
+48019,Bandera,Alamo
+48021,Bastrop,Capital
+48023,Baylor,Northwest
+48025,Bee,South Texas
+48027,Bell,Central Texas
+48029,Bexar,Alamo
+48031,Blanco,Capital
+48033,Borden,West Texas
+48035,Bosque,Central Texas
+48037,Bowie,Upper East
+48039,Brazoria,Gulf Coast
+48041,Brazos,Central Texas
+48043,Brewster,Upper Rio Grande
+48045,Briscoe,High Plains
+48047,Brooks,South Texas
+48049,Brown,Northwest
+48051,Burleson,Central Texas
+48053,Burnet,Capital
+48055,Caldwell,Capital
+48057,Calhoun,Alamo
+48059,Callahan,Northwest
+48061,Cameron,South Texas
+48063,Camp,Upper East
+48065,Carson,High Plains
+48067,Cass,Upper East
+48069,Castro,High Plains
+48071,Chambers,Gulf Coast
+48073,Cherokee,Upper East
+48075,Childress,High Plains
+48077,Clay,Northwest
+48079,Cochran,High Plains
+48081,Coke,West Texas
+48083,Coleman,Northwest
+48085,Collin,Metroplex
+48087,Collingsworth,High Plains
+48089,Colorado,Gulf Coast
+48091,Comal,Alamo
+48093,Comanche,Northwest
+48095,Concho,West Texas
+48097,Cooke,Metroplex
+48099,Coryell,Central Texas
+48101,Cottle,Northwest
+48103,Crane,West Texas
+48105,Crockett,West Texas
+48107,Crosby,High Plains
+48109,Culberson,Upper Rio Grande
+48111,Dallam,High Plains
+48113,Dallas,Metroplex
+48115,Dawson,West Texas
+48117,Deaf Smith,High Plains
+48119,Delta,Upper East
+48121,Denton,Metroplex
+48123,DeWitt,Alamo
+48125,Dickens,High Plains
+48127,Dimmit,South Texas
+48129,Donley,High Plains
+48131,Duval,South Texas
+48133,Eastland,Northwest
+48135,Ector,West Texas
+48137,Edwards,South Texas
+48139,Ellis,Metroplex
+48141,El Paso,Upper Rio Grande
+48143,Erath,Metroplex
+48145,Falls,Central Texas
+48147,Fannin,Metroplex
+48149,Fayette,Capital
+48151,Fisher,Northwest
+48153,Floyd,High Plains
+48155,Foard,Northwest
+48157,Fort Bend,Gulf Coast
+48159,Franklin,Upper East
+48161,Freestone,Central Texas
+48163,Frio,Alamo
+48165,Gaines,West Texas
+48167,Galveston,Gulf Coast
+48169,Garza,High Plains
+48171,Gillespie,Alamo
+48173,Glasscock,West Texas
+48175,Goliad,Alamo
+48177,Gonzales,Alamo
+48179,Gray,High Plains
+48181,Grayson,Metroplex
+48183,Gregg,Upper East
+48185,Grimes,Central Texas
+48187,Guadalupe,Alamo
+48189,Hale,High Plains
+48191,Hall,High Plains
+48193,Hamilton,Central Texas
+48195,Hansford,High Plains
+48197,Hardeman,Northwest
+48199,Hardin,Southeast
+48201,Harris,Gulf Coast
+48203,Harrison,Upper East
+48205,Hartley,High Plains
+48207,Haskell,Northwest
+48209,Hays,Capital
+48211,Hemphill,High Plains
+48213,Henderson,Upper East
+48215,Hidalgo,South Texas
+48217,Hill,Central Texas
+48219,Hockley,High Plains
+48221,Hood,Metroplex
+48223,Hopkins,Upper East
+48225,Houston,Southeast
+48227,Howard,West Texas
+48229,Hudspeth,Upper Rio Grande
+48231,Hunt,Metroplex
+48233,Hutchinson,High Plains
+48235,Irion,West Texas
+48237,Jack,Northwest
+48239,Jackson,Alamo
+48241,Jasper,Southeast
+48243,Jeff Davis,Upper Rio Grande
+48245,Jefferson,Southeast
+48247,Jim Hogg,South Texas
+48249,Jim Wells,South Texas
+48251,Johnson,Metroplex
+48253,Jones,Northwest
+48255,Karnes,Alamo
+48257,Kaufman,Metroplex
+48259,Kendall,Alamo
+48261,Kenedy,South Texas
+48263,Kent,Northwest
+48265,Kerr,Alamo
+48267,Kimble,West Texas
+48269,King,High Plains
+48271,Kinney,South Texas
+48273,Kleberg,South Texas
+48275,Knox,Northwest
+48277,Lamar,Upper East
+48279,Lamb,High Plains
+48281,Lampasas,Central Texas
+48283,La Salle,South Texas
+48285,Lavaca,Alamo
+48287,Lee,Capital
+48289,Leon,Central Texas
+48291,Liberty,Gulf Coast
+48293,Limestone,Central Texas
+48295,Lipscomb,High Plains
+48297,Live Oak,South Texas
+48299,Llano,Capital
+48301,Loving,West Texas
+48303,Lubbock,High Plains
+48305,Lynn,High Plains
+48307,McCulloch,West Texas
+48309,McLennan,Central Texas
+48311,McMullen,South Texas
+48313,Madison,Central Texas
+48315,Marion,Upper East
+48317,Martin,West Texas
+48319,Mason,West Texas
+48321,Matagorda,Gulf Coast
+48323,Maverick,South Texas
+48325,Medina,Alamo
+48327,Menard,West Texas
+48329,Midland,West Texas
+48331,Milam,Central Texas
+48333,Mills,Central Texas
+48335,Mitchell,Northwest
+48337,Montague,Northwest
+48339,Montgomery,Gulf Coast
+48341,Moore,High Plains
+48343,Morris,Upper East
+48345,Motley,High Plains
+48347,Nacogdoches,Southeast
+48349,Navarro,Metroplex
+48351,Newton,Southeast
+48353,Nolan,Northwest
+48355,Nueces,South Texas
+48357,Ochiltree,High Plains
+48359,Oldham,High Plains
+48361,Orange,Southeast
+48363,Palo Pinto,Metroplex
+48365,Panola,Upper East
+48367,Parker,Metroplex
+48369,Parmer,High Plains
+48371,Pecos,West Texas
+48373,Polk,Southeast
+48375,Potter,High Plains
+48377,Presidio,Upper Rio Grande
+48379,Rains,Upper East
+48381,Randall,High Plains
+48383,Reagan,West Texas
+48385,Real,South Texas
+48387,Red River,Upper East
+48389,Reeves,West Texas
+48391,Refugio,South Texas
+48393,Roberts,High Plains
+48395,Robertson,Central Texas
+48397,Rockwall,Metroplex
+48399,Runnels,Northwest
+48401,Rusk,Upper East
+48403,Sabine,Southeast
+48405,San Augustine,Southeast
+48407,San Jacinto,Southeast
+48409,San Patricio,South Texas
+48411,San Saba,Central Texas
+48413,Schleicher,West Texas
+48415,Scurry,Northwest
+48417,Shackelford,Northwest
+48419,Shelby,Southeast
+48421,Sherman,High Plains
+48423,Smith,Upper East
+48425,Somervell,Metroplex
+48427,Starr,South Texas
+48429,Stephens,Northwest
+48431,Sterling,West Texas
+48433,Stonewall,Northwest
+48435,Sutton,West Texas
+48437,Swisher,High Plains
+48439,Tarrant,Metroplex
+48441,Taylor,Northwest
+48443,Terrell,West Texas
+48445,Terry,High Plains
+48447,Throckmorton,Northwest
+48449,Titus,Upper East
+48451,Tom Green,West Texas
+48453,Travis,Capital
+48455,Trinity,Southeast
+48457,Tyler,Southeast
+48459,Upshur,Upper East
+48461,Upton,West Texas
+48463,Uvalde,South Texas
+48465,Val Verde,South Texas
+48467,Van Zandt,Upper East
+48469,Victoria,Alamo
+48471,Walker,Gulf Coast
+48473,Waller,Gulf Coast
+48475,Ward,West Texas
+48477,Washington,Central Texas
+48479,Webb,South Texas
+48481,Wharton,Gulf Coast
+48483,Wheeler,High Plains
+48485,Wichita,Northwest
+48487,Wilbarger,Northwest
+48489,Willacy,South Texas
+48491,Williamson,Capital
+48493,Wilson,Alamo
+48495,Winkler,West Texas
+48497,Wise,Metroplex
+48499,Wood,Upper East
+48501,Yoakum,High Plains
+48503,Young,Northwest
+48505,Zapata,South Texas
+48507,Zavala,South Texas

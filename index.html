@@ -385,7 +385,7 @@ document.addEventListener('DOMContentLoaded', function () {
 <body>
 <p><nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-3"></p>
 <p><div class="container-fluid"></p>
-<p><a class="navbar-brand" href="#" title="sparkta2 v0.7.8 demo">SPARKTA2 v0.7.8 demo</a></p>
+<p><a class="navbar-brand" href="#" title="sparkta2 v0.8.0 demo">SPARKTA2 v0.8.0 demo</a></p>
 <p><button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button></p>
 <p><div class="collapse navbar-collapse" id="mainNavbar"></p>
 <p><ul class="navbar-nav me-auto mb-2 mb-lg-0"></p>
@@ -399,11 +399,14 @@ document.addEventListener('DOMContentLoaded', function () {
 <p><li class="nav-item"><a class="nav-link" href="#s8">Divbar</a></li></p>
 <p><li class="nav-item"><a class="nav-link" href="#s9">Race</a></li></p>
 <p><li class="nav-item"><a class="nav-link" href="#s11">sparkta</a></li></p>
+<p><li class="nav-item"><a class="nav-link" href="#s13">Dashtabs</a></li></p>
+<p><li class="nav-item"><a class="nav-link" href="#s14">Overlays</a></li></p>
+<p><li class="nav-item"><a class="nav-link" href="#s15">Raster</a></li></p>
 <p></ul></p>
 <p></div></div></nav></p>
 <p><a id="top"></a></p>
 <h1 id="sparkta2-demo-maps-native-d3-charts-sparkta-pass-through">sparkta2 demo -- maps, native D3 charts, sparkta pass-through</h1>
-<p><p class="lead">One long page that embeds twelve sparkta2 outputs via &lt;iframe&gt;: five maps, five sparkta2-native chart types (donut, bar2, line2, divbar, barrace), one label-wrap demo, and two sparkta (Chart.js) pass-through charts.  Every sparkta2-native iframe auto-resizes to its content so it does not get clipped behind a scrollbar.  Section 11 deliberately opts out of auto-resize to demonstrate the &lt;code&gt;data-skip-resize&lt;/code&gt; escape hatch (the only example on this page with a visible iframe scrollbar).</p></p>
+<p><p class="lead">One long page that embeds sixteen sparkta2 outputs via &lt;iframe&gt;: five maps, five sparkta2-native chart types (donut, bar2, line2, divbar, barrace), one label-wrap demo, two sparkta (Chart.js) pass-through charts, and four v0.8.0 demos — higher-order <code>dashtab()</code> tabs that swap the whole figure (including its geography), checkbox-toggleable overlay layers with client-side region dissolve, an offline georeferenced raster underlay, and chart-side dashtabs.  Every sparkta2-native iframe auto-resizes to its content so it does not get clipped behind a scrollbar.  Section 11 deliberately opts out of auto-resize to demonstrate the <code>data-skip-resize</code> escape hatch (the only example on this page with a visible iframe scrollbar).</p></p>
 <p><a id="s1"></a></p>
 <h2 id="1-bivariate-choropleth-full-interactive-ui">1. Bivariate choropleth -- full interactive UI</h2>
 <p><p>Two-variable joint quantile map of poverty rate (x) and uninsured rate (y) for Texas counties.  Mode toggle, filters, sliders, search, swap-axes, and the Export dropdown.  Hover for tooltips with three extra variables.</p></p>
@@ -465,7 +468,27 @@ document.addEventListener('DOMContentLoaded', function () {
 <p><p>Same call shape used in existing _datashare do-files: <code>type(bar) over(varname) stat(mean)</code> with multiple y-variables.  v0.7.1 keeps this path unchanged; opt in to sparkta2's D3-native bar by changing <code>type(bar)</code> to <code>type(bar2)</code>.</p></p>
 <p><p class="text-muted small">Source: <code>s12_sparkta_bar.html</code></p></p>
 <iframe src="s12_sparkta_bar.html" width="100%" height="1920px" frameborder="0" style="border:none; border-radius:8px; box-shadow:0 2px 10px rgba(0,0,0,0.06); margin:1rem 0;"></iframe>
-<p><hr><p class="text-muted small">Built with sparkta2 v0.7.8 + webdoc2.  Each iframe is independent; the postMessage listener loaded below resizes every sparkta2-native iframe to match its content height (and sets scrolling="no"), except for iframes marked with <code>data-skip-resize="1"</code>, which keep their declared height and native scrollbar (see section 11).</p></p>
+<p><a id="s13"></a></p>
+<h2 id="13-higher-order-dashtabs-counties-vs-school-districts-v0-8-0">13. Higher-order dashtabs — counties vs school districts (v0.8.0)</h2>
+<p><p>One HTML file, two aggregation levels.  <code>dashtab(level)</code> renders one <em>full map</em> per level of the variable — where <code>over()</code> breaks out subgroups within a chart and <code>by()</code> makes small multiples, <code>dashtab()</code> switches between entirely different figures.  With <code>dashtabgeo(texas|texas_districts) dashtabidwidth(5 7)</code>, the Counties tab joins 254 counties against 5-digit FIPS and the School-districts tab joins 1,016 districts against 7-digit LEAIDs — each tab brings its own geography, legend quantiles, and controls.</p></p>
+<p><p class="text-muted small">Source: <code>s13_dashtab_multigeo.html</code> — built by <code>build_v080_demos.do</code></p></p>
+<iframe src="s13_dashtab_multigeo.html" width="100%" height="900px" frameborder="0" style="border:none; border-radius:8px; box-shadow:0 2px 10px rgba(0,0,0,0.06); margin:1rem 0;"></iframe>
+<p><a id="s14"></a></p>
+<h2 id="14-checkbox-layers-comptroller-regions-dissolved-over-counties-v0-8-0">14. Checkbox layers — Comptroller regions dissolved over counties (v0.8.0)</h2>
+<p><p>The new <em>Layers</em> section of the controls panel gives every overlay its own on/off checkbox.  <code>overlays(region states)</code> draws two: the <code>states</code> boundary mesh from the bundled TopoJSON, and — the interesting one — <code>region</code>, a plain <em>variable in the dataset</em> mapping each county to its Comptroller economic region.  The engine dissolves the county polygons by that variable in the browser (<code>topojson.merge</code>) and draws the twelve labelled region outlines on top.  No region shapefile exists anywhere in this page.  <code>maplabels</code> adds toggleable county name labels that hold their size while you zoom.</p></p>
+<p><p class="text-muted small">Source: <code>s14_overlays_regions.html</code> — built by <code>build_v080_demos.do</code> with <code>data/comptroller_regions.csv</code></p></p>
+<iframe src="s14_overlays_regions.html" width="100%" height="900px" frameborder="0" style="border:none; border-radius:8px; box-shadow:0 2px 10px rgba(0,0,0,0.06); margin:1rem 0;"></iframe>
+<p><a id="s15"></a></p>
+<h2 id="15-offline-raster-underlay-v0-8-0">15. Offline raster underlay (v0.8.0)</h2>
+<p><p><code>rasterimage()</code> + <code>rasterbounds(west south east north)</code> embed a georeferenced image <em>inside</em> the HTML as a base64 data URI — still one self-contained file, no tile server, no network at view time.  The image (here a synthetic gradient surface standing in for a satellite composite or model output) is stretched between its projected corner coordinates beneath the data layer, with its own Layers checkbox and opacity set by <code>rasteropacity()</code>.  <code>projection(mercator)</code> keeps the alignment exact; under the default Albers the pixels stay straight while the graticule bends, so treat that combination as decorative.</p></p>
+<p><p class="text-muted small">Source: <code>s15_raster_underlay.html</code> — built by <code>build_v080_demos.do</code> with <code>data/demo_raster_surface.png</code></p></p>
+<iframe src="s15_raster_underlay.html" width="100%" height="900px" frameborder="0" style="border:none; border-radius:8px; box-shadow:0 2px 10px rgba(0,0,0,0.06); margin:1rem 0;"></iframe>
+<p><a id="s16"></a></p>
+<h2 id="16-chart-side-dashtabs-counties-vs-region-averages-v0-8-0">16. Chart-side dashtabs — counties vs region averages (v0.8.0)</h2>
+<p><p>The same higher-order tabs work on the native chart types.  Here a horizontal <code>bar2</code> switches between the twelve highest-poverty counties and the twelve Comptroller-region averages — each tab is a complete re-render at a different aggregation level, produced by one <code>sparkta2 ..., type(bar2) dashtab(level)</code> call on a stacked dataset.</p></p>
+<p><p class="text-muted small">Source: <code>s16_chart_dashtab.html</code> — built by <code>build_v080_demos.do</code></p></p>
+<iframe src="s16_chart_dashtab.html" width="100%" height="820px" frameborder="0" style="border:none; border-radius:8px; box-shadow:0 2px 10px rgba(0,0,0,0.06); margin:1rem 0;"></iframe>
+<p><hr><p class="text-muted small">Built with sparkta2 v0.8.0 + webdoc2.  Each iframe is independent; the postMessage listener loaded below resizes every sparkta2-native iframe to match its content height (and sets scrolling="no"), except for iframes marked with <code>data-skip-resize="1"</code>, which keep their declared height and native scrollbar (see section 11).</p></p>
 <p><script src="sparkta2_resize.js"></script></p>
 </body>
 </html>
