@@ -99,17 +99,20 @@ sparkta2 poverty_rate, id(geoid) name(name) type(choropleth) scheme(blues) ///
 *-----------------------------------------------------------------------------
 use `counties', clear
 sparkta2 poverty_rate, id(fips) name(county) type(choropleth) scheme(blues) ///
+    classes(jenks) scalebar northarrow                                      ///
     overlays(region states keystudy) maplabels labelsize(7)                 ///
-    download datatable downloadpos(below) tx2036style                                          ///
+    overlaycolors("#1B2D55 #6C7A8D #D44500") overlaywidths(1.5 1 2.2)       ///
+    overlaydash(solid solid dashed)                                         ///
+    download datatable downloadpos(below) tx2036style                       ///
     title("Checkbox layers: regions dissolved over counties")               ///
-    subtitle("overlays(region states keystudy) + maplabels: region outlines are merged in the browser from the county polygons, and a sparse variable spotlights the key study counties - no extra shapefile") ///
+    subtitle("v0.8.1: jenks natural breaks + scale bar + north arrow, with per-overlay styling - navy regions, gray state lines, dashed orange spotlight - all merged in the browser, no extra shapefile") ///
     export("s14_overlays_regions.html") offline noopen
 
 *-----------------------------------------------------------------------------
 * s15: rasterimage() -- georeferenced image layer under the data layer
 *-----------------------------------------------------------------------------
 sparkta2 poverty_rate, id(fips) name(county) type(choropleth) scheme(greens) ///
-    projection(mercator)                                                     ///
+    projection(mercator) northarrow scalebar                                 ///
     rasterimage("data/demo_raster_surface.png")                              ///
     rasterbounds(-106.7 25.8 -93.5 36.5) rasteropacity(0.55)                 ///
     rasterlabel("Synthetic surface (demo)")                                  ///
@@ -176,7 +179,9 @@ label variable region   "Comptroller economic region"
 label variable keystudy "Key study counties (demo)"
 
 sparkta2 poverty_rate uninsured_rate, id(fips) name(county) type(bivariate) ///
+    classes(jenks) scalebar                                                 ///
     dashtab(level) overlays(region keystudy) maplabels labelsize(6)         ///
+    overlaycolors("#1B2D55 #D44500") overlaydash(solid dashed)              ///
     filters(region) sliders(poverty_rate) search swapbutton                 ///
     download datatable downloadpos(below) tx2036style                       ///
     title("All of v0.8.0 in one call")                                      ///
