@@ -89,7 +89,7 @@ label variable poverty_rate "Poverty rate (%)"
 
 sparkta2 poverty_rate, id(geoid) name(name) type(choropleth) scheme(blues) ///
     dashtab(level) dashtabgeo(texas|texas_districts) dashtabidwidth(5 7)   ///
-    download datatable tx2036style                                          ///
+    download datatable downloadpos(below) tx2036style                                          ///
     title("One file, two aggregation levels")                               ///
     subtitle("dashtab(level) + dashtabgeo(texas|texas_districts): the tab bar swaps the entire figure - data, geography, legend")  ///
     export("s13_dashtab_multigeo.html") offline noopen
@@ -100,7 +100,7 @@ sparkta2 poverty_rate, id(geoid) name(name) type(choropleth) scheme(blues) ///
 use `counties', clear
 sparkta2 poverty_rate, id(fips) name(county) type(choropleth) scheme(blues) ///
     overlays(region states keystudy) maplabels labelsize(7)                 ///
-    download datatable tx2036style                                          ///
+    download datatable downloadpos(below) tx2036style                                          ///
     title("Checkbox layers: regions dissolved over counties")               ///
     subtitle("overlays(region states keystudy) + maplabels: region outlines are merged in the browser from the county polygons, and a sparse variable spotlights the key study counties - no extra shapefile") ///
     export("s14_overlays_regions.html") offline noopen
@@ -113,7 +113,7 @@ sparkta2 poverty_rate, id(fips) name(county) type(choropleth) scheme(greens) ///
     rasterimage("data/demo_raster_surface.png")                              ///
     rasterbounds(-106.7 25.8 -93.5 36.5) rasteropacity(0.55)                 ///
     rasterlabel("Synthetic surface (demo)")                                  ///
-    download tx2036style                                                     ///
+    download downloadpos(below) tx2036style                                                     ///
     title("Offline raster layer under a choropleth")                         ///
     subtitle("rasterimage() + rasterbounds(): the image is base64-embedded - one self-contained file, no tile server. Mercator keeps it aligned.") ///
     export("s15_raster_underlay.html") offline noopen
@@ -140,26 +140,47 @@ label values level blvl
 label variable poverty_rate "Poverty rate (%)"
 
 sparkta2 poverty_rate, name(name) type(bar2) horizontal dashtab(level)   ///
-    download datatable tx2036style                                        ///
+    download datatable downloadpos(below) tx2036style                                        ///
     title("Chart dashtab: counties vs region averages")                   ///
     subtitle("The same higher-order tabs on a native bar2 chart - each tab is a complete re-render at a different aggregation level") ///
     export("s16_chart_dashtab.html") offline noopen
 
 *-----------------------------------------------------------------------------
-* s17: EVERYTHING TOGETHER -- bivariate + dashtab + overlays + labels +
+* s17: EVERYTHING TOGETHER -- counties vs collapsed REGION AVERAGES behind
+*      dashtab (same geometry, coarser signal), with overlays + labels +
 *      filters + sliders + search + swap + export, one call
 *-----------------------------------------------------------------------------
 use `counties', clear
-generate byte half = fips >= 48250
-label define halfL 0 "Western half" 1 "Eastern half"
-label values half halfL
-label variable half "State half"
+preserve
+collapse (mean) pov_reg = poverty_rate unins_reg = uninsured_rate, by(region)
+tempfile regmeans
+save `regmeans'
+restore
+merge m:1 region using `regmeans', nogenerate
+
+preserve
+keep fips county region keystudy poverty_rate uninsured_rate
+generate int level = 1
+tempfile lvl1
+save `lvl1'
+restore
+keep fips county region keystudy pov_reg unins_reg
+rename (pov_reg unins_reg) (poverty_rate uninsured_rate)
+generate int level = 2
+append using `lvl1'
+label define aggL 1 "Counties" 2 "Region averages"
+label values level aggL
+label variable poverty_rate   "Poverty rate (%)"
+label variable uninsured_rate "Uninsured rate (%)"
+label variable region   "Comptroller economic region"
+label variable keystudy "Key study counties (demo)"
+
 sparkta2 poverty_rate uninsured_rate, id(fips) name(county) type(bivariate) ///
-    dashtab(half) overlays(region keystudy) maplabels labelsize(6)          ///
+    dashtab(level) overlays(region keystudy) maplabels labelsize(6)         ///
     filters(region) sliders(poverty_rate) search swapbutton                 ///
-    download datatable tx2036style                                          ///
+    download datatable downloadpos(below) tx2036style                       ///
     title("All of v0.8.0 in one call")                                      ///
-    subtitle("dashtab(half) x bivariate x overlays(region keystudy) x maplabels x filters x sliders x search x swap x export - every control coexists; each tab re-renders the lot") ///
+    subtitle("dashtab(level) flips county values vs region averages collapsed onto the same county geometry - x overlays(region keystudy) x maplabels x filters x sliders x search x swap x export") ///
     export("s17_kitchen_sink.html") offline noopen
 
 *-----------------------------------------------------------------------------
@@ -188,7 +209,7 @@ sparkta2 value, id(fips) name(county) type(choropleth) scheme(purples)     ///
     rasterimage("data/demo_raster_surface.png")                             ///
     rasterbounds(-106.7 25.8 -93.5 36.5) rasteropacity(0.4)                 ///
     rasterlabel("Synthetic surface (demo)")                                 ///
-    overlays(region) download tx2036style                                   ///
+    overlays(region) download downloadpos(below) tx2036style                                   ///
     title("Dashbuttons as a measure switcher, over a raster")               ///
     subtitle("dashtab() is not only for geography: stack measures long and the buttons flip poverty vs uninsured - here over the raster underlay with region outlines on top") ///
     export("s18_measure_switch_raster.html") offline noopen
