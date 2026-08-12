@@ -32,12 +32,25 @@ label variable uninsured_rate "Uninsured rate (%)"
 preserve
 import delimited using "data/comptroller_regions.csv", varnames(1) clear
 rename geoid fips
-keep fips region
+rename county county_name
+keep fips county_name region
 tempfile xwalk
 save `xwalk'
 restore
 merge 1:1 fips using `xwalk', nogenerate keep(3)
+* The demo CSV ships synthetic "County 48xxx" names; the crosswalk carries
+* the real county names — use those everywhere a name shows.
+drop county
+rename county_name county
 label variable region "Comptroller economic region"
+
+* A sparse highlight variable: empty for most rows, so only the flagged
+* counties get dissolved outlines — the checkbox becomes a spotlight layer.
+generate str28 keystudy = ""
+replace keystudy = "Key study counties (demo)" ///
+    if inlist(fips, 48201, 48113, 48439, 48029, 48453, 48085, 48141, 48355)
+label variable keystudy "Key study counties (demo)"
+
 tempfile counties
 save `counties'
 
@@ -86,10 +99,10 @@ sparkta2 poverty_rate, id(geoid) name(name) type(choropleth) scheme(blues) ///
 *-----------------------------------------------------------------------------
 use `counties', clear
 sparkta2 poverty_rate, id(fips) name(county) type(choropleth) scheme(blues) ///
-    overlays(region states) maplabels labelsize(7)                          ///
+    overlays(region states keystudy) maplabels labelsize(7)                 ///
     download datatable tx2036style                                          ///
     title("Checkbox layers: regions dissolved over counties")               ///
-    subtitle("overlays(region states) + maplabels: the region outlines are merged in the browser from the county polygons - no extra shapefile") ///
+    subtitle("overlays(region states keystudy) + maplabels: region outlines are merged in the browser from the county polygons, and a sparse variable spotlights the key study counties - no extra shapefile") ///
     export("s14_overlays_regions.html") offline noopen
 
 *-----------------------------------------------------------------------------
@@ -131,5 +144,53 @@ sparkta2 poverty_rate, name(name) type(bar2) horizontal dashtab(level)   ///
     title("Chart dashtab: counties vs region averages")                   ///
     subtitle("The same higher-order tabs on a native bar2 chart - each tab is a complete re-render at a different aggregation level") ///
     export("s16_chart_dashtab.html") offline noopen
+
+*-----------------------------------------------------------------------------
+* s17: EVERYTHING TOGETHER -- bivariate + dashtab + overlays + labels +
+*      filters + sliders + search + swap + export, one call
+*-----------------------------------------------------------------------------
+use `counties', clear
+generate byte half = fips >= 48250
+label define halfL 0 "Western half" 1 "Eastern half"
+label values half halfL
+label variable half "State half"
+sparkta2 poverty_rate uninsured_rate, id(fips) name(county) type(bivariate) ///
+    dashtab(half) overlays(region keystudy) maplabels labelsize(6)          ///
+    filters(region) sliders(poverty_rate) search swapbutton                 ///
+    download datatable tx2036style                                          ///
+    title("All of v0.8.0 in one call")                                      ///
+    subtitle("dashtab(half) x bivariate x overlays(region keystudy) x maplabels x filters x sliders x search x swap x export - every control coexists; each tab re-renders the lot") ///
+    export("s17_kitchen_sink.html") offline noopen
+
+*-----------------------------------------------------------------------------
+* s18: dashtab as a MEASURE switcher (buttons style) + raster underlay --
+*      the tab variable need not be geographic: stack two measures long
+*-----------------------------------------------------------------------------
+use `counties', clear
+keep fips county region keystudy poverty_rate uninsured_rate
+preserve
+keep fips county region keystudy poverty_rate
+rename poverty_rate value
+generate int measure = 1
+tempfile mpov
+save `mpov'
+restore
+keep fips county region keystudy uninsured_rate
+rename uninsured_rate value
+generate int measure = 2
+append using `mpov'
+label define measL 1 "Poverty rate" 2 "Uninsured rate"
+label values measure measL
+label variable value "Share of residents (%)"
+sparkta2 value, id(fips) name(county) type(choropleth) scheme(purples)     ///
+    dashtab(measure) dashtabstyle(buttons)                                  ///
+    projection(mercator)                                                    ///
+    rasterimage("data/demo_raster_surface.png")                             ///
+    rasterbounds(-106.7 25.8 -93.5 36.5) rasteropacity(0.4)                 ///
+    rasterlabel("Synthetic surface (demo)")                                 ///
+    overlays(region) download tx2036style                                   ///
+    title("Dashbuttons as a measure switcher, over a raster")               ///
+    subtitle("dashtab() is not only for geography: stack measures long and the buttons flip poverty vs uninsured - here over the raster underlay with region outlines on top") ///
+    export("s18_measure_switch_raster.html") offline noopen
 
 display as result _n "V080 DEMOS BUILT"
