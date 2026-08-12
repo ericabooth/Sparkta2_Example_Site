@@ -99,13 +99,15 @@ sparkta2 poverty_rate, id(geoid) name(name) type(choropleth) scheme(blues) ///
 *-----------------------------------------------------------------------------
 use `counties', clear
 sparkta2 poverty_rate, id(fips) name(county) type(choropleth) scheme(blues) ///
-    classes(jenks) scalebar northarrow                                      ///
+    classes(jenks) scalebar northarrow basemap                              ///
+    linecolor("#334155") linewidth(0.6)                                     ///
+    basemapcolor("#94a3b8") basemapwidth(0.9)                               ///
     overlays(region states keystudy) maplabels labelsize(7)                 ///
     overlaycolors("#1B2D55 #6C7A8D #D44500") overlaywidths(1.5 1 2.2)       ///
     overlaydash(solid solid dashed)                                         ///
     download datatable downloadpos(below) tx2036style                       ///
     title("Checkbox layers: regions dissolved over counties")               ///
-    subtitle("v0.8.1: jenks natural breaks + scale bar + north arrow, with per-overlay styling - navy regions, gray state lines, dashed orange spotlight - all merged in the browser, no extra shapefile") ///
+    subtitle("v0.8.1/0.8.2: jenks natural breaks, scale bar + north arrow, slate county borders via linecolor()/linewidth(), a styled basemap outline, and per-overlay styling - navy regions, gray state lines, dashed orange spotlight") ///
     export("s14_overlays_regions.html") offline noopen
 
 *-----------------------------------------------------------------------------
